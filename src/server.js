@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
 app.post('/signin', (req, res) => {
   if (req.body.email === database.users[0].email &&
       req.body.password === database.users[0].password) {
-    res.json('Success!');
+    res.json(database.users[0]);
   } else {
     res.status(400).json('Username or password is incorrect');
   }
@@ -53,7 +53,13 @@ app.post('/register', async (req, res) => {
     joined: new Date(),
   };
   database.users.push(newUser);
-  res.status(200).json(newUser);
+  res.status(200).json({
+    id: database.users[database.users.length - 1].id + 1,
+    name,
+    email,
+    entries: 0,
+    joined: new Date(),
+  });
 });
 
 app.get('/profile/:id', (req, res) => {
