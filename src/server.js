@@ -2,27 +2,20 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const knex = require('knex');
+const dbConfig = require('./config');
 
-const database = {
-  users: [
-    {
-      id: 123,
-      name: 'Luke',
-      email: 'luke@example.com',
-      password: 'cookies',
-      entries: 0,
-      joined: new Date(),
-    },
-    {
-      id: 124,
-      name: 'Becky',
-      email: 'becky@example.com',
-      password: 'woody',
-      entries: 0,
-      joined: new Date(),
-    }
-  ]
-};
+const { dbHost, dbUser, dbPassword, dbName } = dbConfig;
+
+const db = knex({
+  client: 'pg',
+  connection: {
+    host: dbHost,
+    user: dbUser,
+    password: dbPassword,
+    database: dbName
+  },
+});
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
