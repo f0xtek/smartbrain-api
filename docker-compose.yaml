@@ -13,5 +13,6 @@ services:
       - 5432:5432
     volumes:
       - smartbrain-db-data:/var/lib/postgresql/data
+      - $PWD/db/createTables.sql:/docker-entrypoint-initdb.d/createTables.sql
 volumes:
   smartbrain-db-data:
